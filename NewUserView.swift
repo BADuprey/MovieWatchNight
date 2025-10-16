@@ -9,13 +9,14 @@ struct NewUserView: View {
     @State var warning = Text("")
     var body: some View {
         VStack {
+            Text("New User").font(.title)
             Spacer()
-            TextField("Username", text: $username)
-            SecureField("Password", text: $password)
-            SecureField("Confirm Password", text: $confirmedPassword).onSubmit(MakeUser)
+            TextField("Username", text: $username).background(textFieldColor).border(.black, width: 1)
+            SecureField("Password", text: $password).background(textFieldColor).border(.black, width: 1)
+            SecureField("Confirm Password", text: $confirmedPassword).onSubmit(MakeUser).background(textFieldColor).border(.black, width: 1)
             warning
             Spacer()
-        }
+        }.padding(50)
     }
     func MakeUser() {
         if password == confirmedPassword {

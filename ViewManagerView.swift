@@ -22,8 +22,8 @@ struct ViewManagerView: View {
             Spacer()
             VStack {
                 if currentView == .logInView{
-                    Button("Forgot Password?", action: {currentView = .forgotPasswordView})
-                    Button("New User? Sign Up!", action: {currentView = .newUserView})
+                    Button("Forgot Password?", action: {currentView = .forgotPasswordView}).padding(10)
+                    Button("New User? Sign Up!", action: {currentView = .newUserView}).padding(10)
                 } else {
                     Button("Back <-", action: {currentView = .logInView})
                 }

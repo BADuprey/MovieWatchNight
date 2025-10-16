@@ -7,8 +7,15 @@ struct ForgotPasswordView: View {
         VStack {
             Text("Forgot Password?").font(.title)
             Spacer()
-            TextField("Username", text: $username)
+            VStack {
+                TextField("Username", text: $username).background(textFieldColor).border(.black, width: 1)
+                Spacer()
+            }.padding(50)
             Spacer()
         }
     }
+}
+
+#Preview {
+    ForgotPasswordView()
 }
