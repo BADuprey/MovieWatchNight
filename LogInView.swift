@@ -12,8 +12,8 @@ struct LogInView: View {
             Text("Log In").font(.title)
             Spacer()
             VStack {
-                TextField("Username", text: $username).background(textFieldColor).border(.black, width: 1)
-                SecureField("Password", text: $password).background(textFieldColor).border(.black, width: 1)
+                TextField("Username", text: $username).textFieldStyle(.roundedBorder).border(.black, width: 1)
+                SecureField("Password", text: $password).textFieldStyle(.roundedBorder).border(.black, width: 1)
             }.padding(50)
             
             Spacer()

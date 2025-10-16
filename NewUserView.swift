@@ -4,6 +4,7 @@ struct NewUserView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var confirmedPassword: String = ""
+    @State var emailAddress: String = ""
     
     @State var showWarning = false
     @State var warning = Text("")
@@ -11,9 +12,10 @@ struct NewUserView: View {
         VStack {
             Text("New User").font(.title)
             Spacer()
-            TextField("Username", text: $username).background(textFieldColor).border(.black, width: 1)
-            SecureField("Password", text: $password).background(textFieldColor).border(.black, width: 1)
-            SecureField("Confirm Password", text: $confirmedPassword).onSubmit(MakeUser).background(textFieldColor).border(.black, width: 1)
+            TextField("Username", text: $username).textFieldStyle(.roundedBorder).border(.black, width: 1).padding(5)
+            TextField("Email Address", text: $emailAddress).textFieldStyle(.roundedBorder).border(.black, width: 1).padding(5)
+            SecureField("Password", text: $password).textFieldStyle(.roundedBorder).border(.black, width: 1).padding(5)
+            SecureField("Confirm Password", text: $confirmedPassword).onSubmit(MakeUser).textFieldStyle(.roundedBorder).border(.black, width: 1).padding(5)
             warning
             Spacer()
         }.padding(50)
