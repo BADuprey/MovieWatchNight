@@ -1,0 +1,9 @@
+
+As soon as ContentView.Swift is run, a log-in page will pop up. Sign in with the following credentials only:
+    * Username: Test
+    * Password: 1234
+
+For sprint 1, each view works as a placeholder set up for guidance for sprint 2, when we incorporate the database.
+
+You should be able to log-in with the provided credentials and use the nav to move through the views.
+                          - Sasha, Rachel, Brodie
