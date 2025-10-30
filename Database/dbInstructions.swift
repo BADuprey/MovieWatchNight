@@ -1,4 +1,4 @@
-# Example Code (from google AI, it might not be good)
+// Example Code (from google AI, it might not be good)
 import Foundation
 
 func doRequest(url: URL, parameters: [String: String], completion: @escaping (Result<Data, Error>) -> Void) {
