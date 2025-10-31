@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import csv
+import re
 
 ENCODING = "utf8"
 DATABASE_NAME = "movieWatchNight.db"
@@ -34,6 +35,7 @@ def createTables():
     commandString = """CREATE TABLE movies (
         movieID int PRIMARY KEY,
         title text,
+        overview text,
         rating float,
         release date
         );
@@ -61,16 +63,17 @@ def createTables():
 
     commandString = """CREATE TABLE genreMovieRelation (
         movieID int,
-        genre text
+        genre text,
+        FOREIGN KEY (movieID) REFERENCES movies(movieID)
         );
     """
+    c.execute(commandString)
     conn.commit()
     closeConnection(c, conn)
 
 # DESTROYS ALL TABLES - DONT USE UNLESS ITS LAST RESORT
 def dropTables():
     conn, c = openConnection()
-
     tableNames = ["users", "movies", "groups", "groupMemberRelation", "genreMovieRelation"]
 
     for table in tableNames:
@@ -236,14 +239,31 @@ def addMovies():
         title = movie["title"]
         rating = float(movie["vote_average"])
         release = movie["release_date"]
-
-        commandString = f'INSERT INTO movies (movieID, title, rating, release) \
-                          VALUES ({id}, "{title}", {rating}, "{release}");'
+        overview = movie["overview"].replace("\"", "'")
+        print(overview)
+        commandString = f'INSERT INTO movies (movieID, title, overview, rating, release) \
+                          VALUES ({id}, "{title}", "{overview}", {rating}, "{release}");'
         c.execute(commandString)
     
     conn.commit()
     
-
+def addGenres():
+    genreMatch = r"'name': '(.+?)'}"
+    conn, c = openConnection()
+    with open(CLEANED_MOVIES, "r", encoding=ENCODING) as file:
+        content = json.load(file)
+    for movie in content:
+        genres = movie["genres"]
+        movieID = int(movie["id"])
+        hits = re.findall(genreMatch, genres)
+        for hit in hits:
+            commandString = f"INSERT INTO genreMovieRelation (movieID, genre) VALUES \
+                             ({movieID}, '{hit}');"
+            c.execute(commandString)
+    conn.commit()
+    closeConnection(c, conn)
+            
+        
 
 # RESETS DATABASE
 def test():
@@ -273,6 +293,4 @@ def test():
 
 if __name__ == "__main__":
     resetDB()
-    createTables()
     addMovies()
-    
