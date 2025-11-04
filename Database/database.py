@@ -22,7 +22,7 @@ def closeConnection(cursor, connection):
 # creates table in database
 def createTables():
     conn, c = openConnection()
-
+    commands = []
     commandString = """CREATE TABLE users (
         userID int AUTO_INCREMENT PRIMARY KEY,
         username text UNIQUE,
@@ -30,7 +30,7 @@ def createTables():
         emailAddress text
     );
     """
-    c.execute(commandString)
+    commands.append(commandString)
 
     commandString = """CREATE TABLE movies (
         movieID int PRIMARY KEY,
@@ -40,7 +40,7 @@ def createTables():
         release date
         );
     """
-    c.execute(commandString)
+    commands.append(commandString)
 
     commandString = """CREATE TABLE groups (
         groupID int AUTO_INCREMENT PRIMARY KEY,
@@ -49,7 +49,7 @@ def createTables():
         FOREIGN KEY (leaderID) REFERENCES users(userID)
     );
     """
-    c.execute(commandString)
+    commands.append(commandString)
 
     commandString = """CREATE TABLE groupMemberRelation (
         groupID int,
@@ -58,8 +58,7 @@ def createTables():
         FOREIGN KEY (userID) REFERENCES users(userID)
         );
     """
-
-    c.execute(commandString)
+    commands.append(commandString)
 
     commandString = """CREATE TABLE genreMovieRelation (
         movieID int,
@@ -67,14 +66,42 @@ def createTables():
         FOREIGN KEY (movieID) REFERENCES movies(movieID)
         );
     """
-    c.execute(commandString)
+    commands.append(commandString)
+
+    commandString = """CREATE TABLE events (
+        eventID int AUTO INCREMENT PRIMARY KEY,
+        title text,
+        date date
+        );
+    """
+    commands.append(commandString)
+
+    commandString = """CREATE TABLE groupEventRelation (
+        groupID int,
+        eventID int,
+        FOREIGN KEY (eventID) REFERENCES events(eventID),
+        FOREIGN KEY (groupID) REFERENCES groups(groupID)
+        );
+    """
+    commands.append(commandString)
+
+    commandString = """CREATE TABLE userEventRelation (
+        userID int,
+        eventID int,
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (eventID) REFERENCES events(eventID)
+        );
+    """
+
+    for command in commands:
+        c.execute(command)
     conn.commit()
     closeConnection(c, conn)
 
 # DESTROYS ALL TABLES - DONT USE UNLESS ITS LAST RESORT
 def dropTables():
     conn, c = openConnection()
-    tableNames = ["users", "movies", "groups", "groupMemberRelation", "genreMovieRelation"]
+    tableNames = ["groupMemberRelation", "genreMovieRelation", "groupEventRelation", "userEventRelation", "users", "movies", "groups", "events"]
 
     for table in tableNames:
         commandString = "DROP TABLE IF EXISTS " + table + ";"
@@ -240,7 +267,6 @@ def addMovies():
         rating = float(movie["vote_average"])
         release = movie["release_date"]
         overview = movie["overview"].replace("\"", "'")
-        print(overview)
         commandString = f'INSERT INTO movies (movieID, title, overview, rating, release) \
                           VALUES ({id}, "{title}", "{overview}", {rating}, "{release}");'
         c.execute(commandString)
