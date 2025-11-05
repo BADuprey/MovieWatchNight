@@ -280,12 +280,13 @@ Summary for the whole "journey" for info view:
 ### For schedule view: (SASHA ADD LATER!)
 * 
 
-### For YYY (if u used a resource, site it please and add a title!)
+### For YYY (if u used a resource, cite it please and add a title!)
 * 
 
 ### MISCELLANEOUS 
 * https://developer.apple.com/documentation/swiftui/vstack
 * https://developer.apple.com/documentation/Symbols
+* https://developer.apple.com/documentation/swiftui/securefield
 
 
 
