@@ -42,6 +42,23 @@ def createTables():
     """
     commands.append(commandString)
 
+    commandString = """CREATE TABLE userWatchList (
+        userID int,
+        movieID int,
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (movieID) REFERENCES movies(movieID)
+        );
+    """
+    commands.append(commandString)
+
+    commandString = """CREATE TABLE userAntiWatchList (
+        userID int,
+        movieID int,
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (movieID) REFERENCES movies(movieID)
+        );
+    """
+
     commandString = """CREATE TABLE groups (
         groupID INTEGER PRIMARY KEY AUTOINCREMENT,
         groupName text,
@@ -59,6 +76,23 @@ def createTables():
         );
     """
     commands.append(commandString)
+
+    commandString = """CREATE TABLE groupWatchList (
+        groupID int,
+        movieID int,
+        FOREIGN KEY (groupID) REFERENCES groups(groupID),
+        FOREIGN KEY (movieID) REFERENCES movies(movieID)
+        );
+    """
+    commands.append(commandString)
+
+    commandString = """CREATE TABLE groupAntiWatchList (
+        groupID int,
+        movieID int,
+        FOREIGN KEY (groupID) REFERENCES groups(groupID),
+        FOREIGN KEY (movieID) REFERENCES movies(movieID)
+        );
+    """
 
     commandString = """CREATE TABLE genreMovieRelation (
         movieID int,
@@ -101,7 +135,7 @@ def createTables():
 # DESTROYS ALL TABLES - DONT USE UNLESS ITS LAST RESORT
 def dropTables():
     conn, c = openConnection()
-    tableNames = ["groupMemberRelation", "genreMovieRelation", "groupEventRelation", "userEventRelation", "users", "movies", "groups", "events"]
+    tableNames = ["groupMemberRelation", "genreMovieRelation", "groupEventRelation", "userEventRelation", "userWatchList", "userAntiWatchList", "groupWatchList", "groupAntiWatchList", "users", "movies", "groups", "events"]
 
     for table in tableNames:
         commandString = "DROP TABLE IF EXISTS " + table + ";"
