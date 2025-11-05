@@ -24,7 +24,7 @@ def createTables():
     conn, c = openConnection()
     commands = []
     commandString = """CREATE TABLE users (
-        userID int AUTO_INCREMENT PRIMARY KEY,
+        userID INTEGER PRIMARY KEY AUTOINCREMENT,
         username text UNIQUE,
         passHash text,
         emailAddress text
@@ -43,7 +43,7 @@ def createTables():
     commands.append(commandString)
 
     commandString = """CREATE TABLE groups (
-        groupID int AUTO_INCREMENT PRIMARY KEY,
+        groupID INTEGER PRIMARY KEY AUTOINCREMENT,
         groupName text,
         leaderID int,
         FOREIGN KEY (leaderID) REFERENCES users(userID)
@@ -69,7 +69,7 @@ def createTables():
     commands.append(commandString)
 
     commandString = """CREATE TABLE events (
-        eventID int AUTO INCREMENT PRIMARY KEY,
+        eventID INTEGER PRIMARY KEY AUTOINCREMENT,
         title text,
         date date
         );
