@@ -71,8 +71,11 @@ def createTables():
     commandString = """CREATE TABLE groupMemberRelation (
         groupID int,
         userID int,
+        vote int,
         FOREIGN KEY (groupID) REFERENCES groups(groupID),
-        FOREIGN KEY (userID) REFERENCES users(userID)
+        FOREIGN KEY (userID) REFERENCES users(userID),
+        FOREIGN KEY (vote) REFERENCES movies(movieID),
+        PRIMARY KEY (groupID, userID)
         );
     """
     commands.append(commandString)
