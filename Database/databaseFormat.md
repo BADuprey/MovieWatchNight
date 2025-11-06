@@ -5,7 +5,7 @@
 |userWatchList|userID, movieID|
 |userAntiWatchList|userID, movieID|
 |groups|groupID, groupName, leaderID|
-|groupMemberRelation|groupID, userID|
+|groupMemberRelation|groupID, userID, vote|
 |groupWatchList|groupID, movieID|
 |groupAntiWatchList|groupID, movieID|
 |genreMovieRelation|movieID, genre|
